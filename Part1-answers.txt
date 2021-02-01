@@ -1,0 +1,24 @@
+a.
+function sortArray($array = []) {
+    ksort($array);
+    return $array;
+}
+
+function sortArray2($array = []) {
+    $array1 = sortArray($array);
+    $array1 = array_values($array1);
+    
+    $array2 = $array;
+
+    sort($array2);
+
+    return [$array1, $array2];
+}
+
+b. There are values that come out of the strpos function that could be interpreted as false (Like a string occuring at the 0 position). The (bool) command is forcing the returned value from strpos to become a boolean value so in that case even if a string was found it would trigger the condition.
+
+c. By using getters and setters an object wouldn't be able to access the properties directly. It can be useful when writing additional validation or other important logic inside them. It has become a convention that can sometimes make the data structure predictable and break the encapsulation of a class.
+
+d. When implemented in the Aclass, The run() method signature from the trait clashes with the interface definition since the interface demands the method to receive two parameters instead of just one.
+
+e. I have worked mostly with frameworks that implement said architecture design and I can't think of another way to improve it.
