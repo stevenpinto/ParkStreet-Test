@@ -1,0 +1,32 @@
+version: '2'
+
+services:
+  myapp:
+    image: 'docker.io/bitnami/symfony:1-debian-10'
+    ports:
+      - '8000:8000'
+    volumes:
+      - '.:/app'
+    environment:
+      - SYMFONY_PROJECT_NAME=parkstreet
+      - MYSQL_HOST=mysql
+      - MYSQL_PORT_NUMBER=3306
+      - MYSQL_USER=sample
+      - MYSQL_PASSWORD=SampleP4ss;
+      - MYSQL_DATABASE=parkstreet
+    depends_on:
+      - mysql
+  mysql:
+    image: mysql
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    ports:
+      - 3308:3306
+    environment:
+      - ALLOW_EMPTY_PASSWORD=no
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=parkstreet
+      - MYSQL_USER=sample
+      - MYSQL_PASSWORD=SampleP4ss;
+    volumes:
+      - ./db_init:/docker-entrypoint-initdb.d
