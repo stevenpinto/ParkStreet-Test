@@ -1,0 +1,28 @@
+
+<div class="content" role="main">
+
+  <!-- Highlight Card -->
+  <img src="https://www.parkstreet.com/wp-content/uploads/logo2.png" alt="Parkstreet Logo">
+  <div class="tile-container">
+    <span>{{ title }}</span>
+  </div>
+
+  <div class="tile-container">
+    <!-- Filters -->
+
+  </div>
+
+  <div class="tile-container">
+    <!-- Ag-Grid -->
+    <ag-grid-angular
+      style="width: 1050px; height: 650px;" 
+      class="ag-theme-balham"
+      [columnDefs]="columnDefs"
+      (gridReady)="onGridReady($event)"
+      >
+    </ag-grid-angular>
+  </div>
+
+</div>
+
+<router-outlet></router-outlet>
