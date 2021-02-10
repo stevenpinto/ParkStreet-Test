@@ -1,0 +1,24 @@
+index:
+   path: /
+   controller: App\Controller\DefaultController::index
+   methods: GET
+
+api_root:
+    path: /api
+    controller: App\Controller\DefaultController::index
+    methods: GET
+
+api_invoices:
+    path:       /api/invoices/report
+    controller: App\Controller\InvoicesReportController::index
+    methods:    GET
+
+api_products:
+    path:       /api/products
+    controller: App\Controller\ProductsController::index
+    methods:    GET
+
+api_clients:
+    path:       /api/clients
+    controller: App\Controller\ClientsController::index
+    methods:    GET

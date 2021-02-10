@@ -1,0 +1,55 @@
+a.1)
+<?php
+    function keySortedArray($arr = [])
+    {
+        ksort($arr);
+
+        // It keeps the reference to $arr but sorted
+        return $arr;
+    }
+?>
+
+a.2)
+<?php
+    function doubleSortedArray($arr = [])
+    {
+        $kSorting = $arr;
+        ksort($kSorting);
+        sort($arr);
+
+        // Got the reference but just display values
+        return [
+            array_values($kSorting),
+            array_values($arr)
+        ];
+    }
+?>
+
+b)
+`strpos` returns the position of the provided string when it founds the looked-for string in it otherwise it returns false in it does not found the looked-for string,
+so it's good to compare against false instead of leaving an auto casted logical comparation. What's wrong is to hard cast the `strpos` return to boolean 
+since it will give us FALSE even when the looked-for string was found in the position 0 (first position) of the provided string (since 0 cast to false).
+
+c)
+Advantages: 
+- Encapsulating information always helps on enhance security in our application.
+- By avoiding set an object property, espcifically, when it's a sensitive data, you protect you own code to be override by a non related functionality
+- It helps as a facade when we want to have a fail safe for the property return. (For example to avoid null exceptions)
+Disadvantages:
+- Encaptulating too much of our properties may our code to look after a way to set/get properties massively in a better way.
+- It could be avoided if the property we are trying to encapsulate is not sensitive and does not need a display functionality or a fail safe functionality.
+
+d)
+It will throw a Fatal error: Declaration of Aclass::run() must be compatible with that of ParkstreetInterface::run() on line XX
+The interfaces define the structure of the classes that are going to implement it, that means that our classes methods definition should match with what is defined in the interface.
+
+e)
+These are the layers I've have to implement when the framework I work with does not include it:
+Middlewares: A layer to validate authentication and also user's permissions.
+Router: Some frameworks like to implement an auto-load based on the controller name and the action method. I'd rather prefer to point exactly to the method or the resource of methods an endpoint targets to
+Services: Some developers like to separate what is the especific functionality of a Model (relationships, rules, massive management) and separate any other complexity to a set of Services for the models.
+Events & Triggers: Sometimes We would like to trigger a task for one or many functionalities out off the controller's capacities, for those cases I like to implement a Event/Trigger pair to perform the required action.
+Observers: Observers for models modification single actions like `insert`, `update`, `delete`
+Helpers / Wrappers: In case we have to handle with a 3rd party api that doesn't have a sdk out of the box, or in case We want to limit or decorate the provided functionality with an extra layer for our owns to consume.
+Factories & Strategies: For those functionality where we expect all of the object to consume are from the same kind but with differences on their construction or behavior (This way We avoid to repeat similar code for different functionalities)
+RequestValidators: Separates the validation from the controller when needed, so it returns the fails before enter to the action functionality.

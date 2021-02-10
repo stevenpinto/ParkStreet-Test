@@ -1,0 +1,30 @@
+version: '2'
+
+services:
+  myapp:
+    image: 'bitnami/symfony:1'
+    ports:
+      - '8000:8000'
+    volumes:
+      - '.:/app'
+    environment:
+      - SYMFONY_PROJECT_NAME=parkstreet
+      - MARIADB_HOST=mariadb
+      - MARIADB_PORT_NUMBER=3308
+      - MARIADB_USER=sample
+      - MARIADB_PASSWORD=SampleP4ss
+      - MARIADB_DATABASE=parkstreet
+    depends_on:
+      - mariadb
+  mariadb:
+    image: 'bitnami/mariadb:10.3'
+    restart: always
+    ports:
+      - 3306:3306
+    environment:
+      - ALLOW_EMPTY_PASSWORD=yes
+      - MARIADB_USER=sample
+      - MARIADB_PASSWORD=SampleP4ss
+      - MARIADB_DATABASE=parkstreet
+    volumes:
+      - './db_init:/docker-entrypoint-initdb.d'
