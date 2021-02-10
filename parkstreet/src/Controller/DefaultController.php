@@ -15,12 +15,25 @@ class DefaultController extends AbstractController
     {
         return $this->json([
             'version' => '0.1.0',
-            'GET' => '/invoices/report',
-            'params' => [
-                'toDate' => 'date',
-                'fromDate' => 'date',
-                'clientId' => 'string',
-                'productId' => 'string',
+            'endpoints' => [
+                [
+                    'GET' => '/api/invoices/report',
+                    'params' => [
+                        'toDate' => 'date',
+                        'fromDate' => 'date',
+                        'clientId' => 'string',
+                        'productId' => 'string',
+                    ]
+                ],
+                [
+                    'GET' => '/api/invoices/products',
+                    'params' => [
+                        'clientId' => 'string',
+                    ]
+                ],
+                [
+                    'GET' => '/api/invoices/clients',
+                ]
             ]
         ]);
     }
