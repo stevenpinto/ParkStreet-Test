@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
-import { NgSelectConfig } from '@ng-select/ng-select';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-root',
@@ -30,13 +30,13 @@ export class AppComponent {
   constructor(private http: HttpClient) {
 
     this.columnDefs = [
-      { headerName: 'Invoice Num', field: 'invoice_num', width: 150, sortable: true, sortingOrder: ['asc', 'desc'] },
-      { headerName: 'Invoice Date', field: 'invoice_date', width: 150, sortable: true, sortingOrder: ['asc', 'desc'] },
-      { headerName: 'Client Name', field: 'client_name', width: 150, sortable: true, sortingOrder: ['asc', 'desc'], filter: true },
-      { headerName: 'Product', field: 'product', width: 150, sortable: true, sortingOrder: ['asc', 'desc'], filter: true },
-      { headerName: 'Quantity', field: 'qty', width: 150, sortable: true, sortingOrder: ['asc', 'desc'] },
-      { headerName: 'Price', field: 'price', width: 150, sortable: true, sortingOrder: ['asc', 'desc'] },
-      { headerName: 'Total', field: 'total', width: 150, sortable: true, sortingOrder: ['asc', 'desc'] },
+      { headerName: 'Invoice Num', field: 'invoice_num', width: 120, sortable: true, sortingOrder: ['asc', 'desc'] },
+      { headerName: 'Invoice Date', field: 'invoice_date', width: 120, sortable: true, sortingOrder: ['asc', 'desc'] },
+      { headerName: 'Client Name', field: 'client_name', width: 180, sortable: true, sortingOrder: ['asc', 'desc'], filter: true },
+      { headerName: 'Product', field: 'product', width: 300, sortable: true, sortingOrder: ['asc', 'desc'], filter: true },
+      { headerName: 'Quantity', field: 'qty', width: 100, sortable: true, sortingOrder: ['asc', 'desc'] },
+      { headerName: 'Price', field: 'price', width: 100, sortable: true, sortingOrder: ['asc', 'desc'] },
+      { headerName: 'Total', field: 'total', width: 100, sortable: true, sortingOrder: ['asc', 'desc'] },
     ];
 
     this.timeMeasures = [
@@ -73,25 +73,35 @@ export class AppComponent {
       reportUrl += `productId=${this.selectedProduct}&`;
     }
 
-    switch (this.selectedTimeMeasure) {
-      case AppComponent.TM_LAST_MONTH_2_DATE:
-        // TODO: add moment to get fromDate & toDate
-        // TODO: add param to reportURL
-        break;
-      case AppComponent.TM_THIS_MONTH:
-        // TODO: add moment to get fromDate & toDate
-        // TODO: add param to reportURL
-        break;
-      case AppComponent.TM_THIS_YEAR:
-        // TODO: add moment to get fromDate & toDate
-        // TODO: add param to reportURL
-        break;
-      case AppComponent.TM_LAST_YEAR:
-        // TODO: add moment to get fromDate & toDate
-        // TODO: add param to reportURL
-        break;
-      default:
-        break;
+    if (!!this.selectedTimeMeasure) {
+      let dateTo;
+      let dateFrom;
+      switch (this.selectedTimeMeasure) {
+        case AppComponent.TM_LAST_MONTH_2_DATE:
+          dateTo = moment();
+          dateFrom = moment().subtract(1, 'month').startOf('month');
+          break;
+        case AppComponent.TM_THIS_MONTH:
+          dateTo = moment();
+          dateFrom = moment().startOf('month');
+          break;
+        case AppComponent.TM_THIS_YEAR:
+          dateTo = moment();
+          dateFrom = moment().startOf('year');
+          break;
+        case AppComponent.TM_LAST_YEAR:
+          dateTo = moment().subtract(1, 'year').endOf('year');
+          dateFrom = moment().subtract(1, 'year').startOf('year');
+          break;
+        default:
+          dateTo = moment();
+          dateFrom = null;
+          break;
+      }
+      // TODO: add param to reportURL
+      dateFrom = (!!dateFrom) ? dateFrom.format('YYYY-MM-DD') : null;
+      dateTo =  dateTo.format('YYYY-MM-DD');
+      reportUrl += `dateFrom=${dateFrom}&dateTo=${dateTo}`;
     }
 
     this.http.get(`${reportUrl}`)
