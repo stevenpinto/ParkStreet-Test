@@ -98,7 +98,7 @@ export class AppComponent {
           dateFrom = null;
           break;
       }
-      // TODO: add param to reportURL
+      // Add params to reportURL
       dateFrom = (!!dateFrom) ? dateFrom.format('YYYY-MM-DD') : null;
       dateTo =  dateTo.format('YYYY-MM-DD');
       reportUrl += `dateFrom=${dateFrom}&dateTo=${dateTo}`;
