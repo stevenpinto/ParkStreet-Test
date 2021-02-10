@@ -25,4 +25,10 @@
     flex-wrap: wrap;
     justify-content: center;
     margin-top: 16px;
+    .tile-filter {
+        min-width: 180px;
+        &.big {
+            min-width: 320px;
+        }
+    }
 }

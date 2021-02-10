@@ -9,13 +9,38 @@
 
   <div class="tile-container">
     <!-- Filters -->
+    <ng-select [items]="timeMeasures"
+           bindLabel="name"
+           bindValue="value"
+           [(ngModel)]="selectedTimeMeasure"
+           class="tile-filter"
+           placeholder="Relative Date"
+           (change)="fetchInvoicesList()">
+    </ng-select>
 
+    <ng-select [items]="products"
+           bindLabel="product_description"
+           bindValue="product_id"
+           [(ngModel)]="selectedProduct"
+           class="tile-filter big"
+           placeholder="Product"
+           (change)="fetchInvoicesList()">
+    </ng-select>
+
+    <ng-select [items]="clients"
+           bindLabel="client_name"
+           bindValue="client_id"
+           [(ngModel)]="selectedClient"
+           class="tile-filter"
+           placeholder="Client"
+           (change)="fetchInvoicesList()">
+    </ng-select>
   </div>
 
   <div class="tile-container">
     <!-- Ag-Grid -->
     <ag-grid-angular
-      style="width: 1075px; height: 650px;" 
+      style="width: 1075px; height: 650px;"
       class="ag-theme-balham"
       [columnDefs]="columnDefs"
       (gridReady)="onGridReady($event)"
