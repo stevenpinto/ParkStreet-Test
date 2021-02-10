@@ -35,8 +35,8 @@ export class AppComponent {
       { headerName: 'Client Name', field: 'client_name', width: 180, sortable: true, sortingOrder: ['asc', 'desc'], filter: true },
       { headerName: 'Product', field: 'product', width: 300, sortable: true, sortingOrder: ['asc', 'desc'], filter: true },
       { headerName: 'Quantity', field: 'qty', width: 100, sortable: true, sortingOrder: ['asc', 'desc'] },
-      { headerName: 'Price', field: 'price', width: 100, sortable: true, sortingOrder: ['asc', 'desc'] },
-      { headerName: 'Total', field: 'total', width: 100, sortable: true, sortingOrder: ['asc', 'desc'] },
+      { headerName: 'Price', field: 'price', width: 100, sortable: true, sortingOrder: ['asc', 'desc'], cellRenderer: (params) => this.currencyFormat(params.value) },
+      { headerName: 'Total', field: 'total', width: 100, sortable: true, sortingOrder: ['asc', 'desc'], cellRenderer: (params) => this.currencyFormat(params.value) },
     ];
 
     this.timeMeasures = [
@@ -108,5 +108,8 @@ export class AppComponent {
     .subscribe(data => {
       this.gridApi.setRowData(data);
     });
+  }
+  currencyFormat (value) {
+    return '$' + value.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
   }
 }
